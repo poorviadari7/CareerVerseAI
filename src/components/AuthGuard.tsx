@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppStore } from '../lib/store';
 import { supabase } from '../lib/supabase';
-import { Loader } from 'lucide-react';
 
-export function AuthGuard({ children }: { children: React.ReactNode }) {
+export function AuthGuard() {
   const student = useAppStore((s) => s.student);
   const navigate = useNavigate();
   const [checking, setChecking] = useState(true);
@@ -27,7 +26,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
       setChecking(false);
     };
     check();
-  }, [student, navigate]);
+  }, []);
 
   if (checking) {
     return (
@@ -38,10 +37,10 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   }
 
   if (!student) return null;
-  return <>{children}</>;
+  return <Outlet />;
 }
 
-export function RedirectOnboarded({ children }: { children: React.ReactNode }) {
+export function RedirectOnboarded() {
   const student = useAppStore((s) => s.student);
   const navigate = useNavigate();
   const [checking, setChecking] = useState(true);
@@ -65,7 +64,7 @@ export function RedirectOnboarded({ children }: { children: React.ReactNode }) {
       setChecking(false);
     };
     check();
-  }, [student, navigate]);
+  }, []);
 
   if (checking) {
     return (
@@ -75,5 +74,5 @@ export function RedirectOnboarded({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return <>{children}</>;
+  return <Outlet />;
 }

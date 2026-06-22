@@ -41,10 +41,7 @@ export default function Interview() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!student?.id) {
-      navigate('/onboarding');
-      return;
-    }
+    if (!student?.id) return;
     startInterview();
   }, [student?.id]);
 
